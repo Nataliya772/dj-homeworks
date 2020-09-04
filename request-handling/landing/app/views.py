@@ -1,5 +1,6 @@
 from collections import Counter
 
+from django.http import HttpResponse
 from django.shortcuts import render_to_response
 
 # Для отладки механизма ab-тестирования используйте эти счетчики
@@ -34,9 +35,13 @@ def stats(request):
     # Чтобы отличить с какой версии лендинга был переход
     # НЕ НУЖНО - проверяйте GET параметр marker который может принимать значения test и original
     # Для вывода результат передайте в следующем формате:
-    test = counter_click.get('test') / counter_show.get('test')
-    origin = counter_click.get('original') / counter_show.get('original')
-    return render_to_response('stats.html', context={
+    try:
+        test = counter_click.get('test') / counter_show.get('test')
+        origin = counter_click.get('original') / counter_show.get('original')
+        return render_to_response('stats.html', context={
         'test_conversion': round(test, 1),
         'original_conversion': round(origin, 1),
-    })
+        })
+    except TypeError or ValueError as e:
+        msg = f'Не хватает просмотров по landing {counter_show} или не было переходов {counter_click}- {e}'
+        return HttpResponse(msg)

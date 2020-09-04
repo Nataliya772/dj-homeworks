@@ -23,14 +23,21 @@ def bus_stations(request):
     paginatir = Paginator(data, 10)
     current_page = int(request.GET.get('page', 1))
     page_obj = paginatir.get_page(current_page)
-    #u = reverse('bus_stations') + '?page=' + str(current_page + 1)
-    u1 = {'page': str(current_page + 1)}
-    u2 = reverse('bus_stations') + '?%s' % urllib.parse.urlencode(u1)
-    next_page_url = u2
+    if page_obj.has_next():
+        page_obj.next_page_number()
+        next_page_url = reverse('bus_stations') + '?%s' % urllib.parse.urlencode(
+            {'page': str(current_page + 1)})
+    else:
+        next_page_url = None
+    if page_obj.has_previous():
+        page_obj.previous_page_number()
+        prev_page_url = reverse('bus_stations') + '?%s' % urllib.parse.urlencode(
+            {'page': str(current_page - 1)})
+    else:
+        prev_page_url = None
     return render_to_response('index.html', context={
-        'bus_stations': page_obj.object_list,
-        'current_page': page_obj,
-        'prev_page_url': None,
-        'next_page_url': next_page_url,
-    })
-
+            'bus_stations': page_obj.object_list,
+            'current_page': page_obj,
+            'prev_page_url': prev_page_url,
+            'next_page_url': next_page_url,
+        })
