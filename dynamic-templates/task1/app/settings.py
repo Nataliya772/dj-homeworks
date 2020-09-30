@@ -106,6 +106,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+INFLATION_RUS_CSV = os.path.join(BASE_DIR, 'inflation_russia.csv')
+
 SECRET_KEY = 'put your secret here'
 DEBUG = True
 

@@ -1,3 +1,5 @@
+{% load color_filter %}
+
 <!DOCTYPE html>{% load static %}
 <html>
   <head>
@@ -17,7 +19,49 @@
       <div class="row">
         <h1 class="col s12">Инфляция в России</h1>
         <div class="col s12 m8">
-        
+
+        <table class="u-full-width">
+          <table>
+            <thead style="font-weight: 650">
+              <tr>
+                <td>{{ Data.0 }}</td>
+                <td>{{ Data.1 }}</td>
+                <td>{{ Data.2 }}</td>
+                <td>{{ Data.3 }}</td>
+                <td>{{ Data.4 }}</td>
+                <td>{{ Data.5 }}</td>
+                <td>{{ Data.6 }}</td>
+                <td>{{ Data.7 }}</td>
+                <td>{{ Data.8 }}</td>
+                <td>{{ Data.9 }}</td>
+                <td>{{ Data.10 }}</td>
+                <td>{{ Data.11 }}</td>
+                <td>{{ Data.12 }}</td>
+                <td>{{ Data.13 }}</td>
+              </tr>
+            </thead>
+            <tbody>
+            {% for elem in Year %}
+              <tr>
+                <td style="font-weight: 650">{{ elem.0 }}</td>
+                <td bgcolor = "{{ elem.1|get_color }}">{{ elem.1 }}</td>
+                <td bgcolor = "{{ elem.2|get_color }}">{{ elem.2 }}</td>
+                <td bgcolor = "{{ elem.3|get_color }}">{{ elem.3 }}</td>
+                <td bgcolor = "{{ elem.4|get_color }}">{{ elem.4 }}</td>
+                <td bgcolor = "{{ elem.5|get_color }}">{{ elem.5 }}</td>
+                <td bgcolor = "{{ elem.6|get_color }}">{{ elem.6 }}</td>
+                <td bgcolor = "{{ elem.7|get_color }}">{{ elem.7 }}</td>
+                <td bgcolor = "{{ elem.8|get_color }}">{{ elem.8 }}</td>
+                <td bgcolor = "{{ elem.9|get_color }}">{{ elem.9|replace_emptiness }}</td>
+                <td bgcolor = "{{ elem.10|get_color }}">{{ elem.10|replace_emptiness }}</td>
+                <td bgcolor = "{{ elem.11|get_color }}">{{ elem.11|replace_emptiness }}</td>
+                <td bgcolor = "{{ elem.12|get_color }}">{{ elem.12|replace_emptiness }}</td>
+                <td bgcolor="grey">{{ elem.13 }}</td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+
         <!-- Ваша логика -->
 
         </div>
